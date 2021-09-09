@@ -1,0 +1,16 @@
+SQSNotificationQueue:
+  Type: AWS::SQS::Queue
+  Properties:
+    RedrivePolicy:
+          deadLetterTargetArn:
+            Fn::GetAtt:
+              - "SQSNotificationDeadLetterQueue"
+              - "Arn"
+          maxReceiveCount: 5
+    QueueName: ${{self:provider.environment.NOTIFICATION_QUEUE}}
+    KmsMasterKeyId: "alias/aws/cmk"
+SQSNotificationDeadLetterQueue: 
+  Type: AWS::SQS::Queue
+  Properties:
+    MessageRetentionPeriod: 604800
+    KmsMasterKeyId: "alias/aws/cmk"
