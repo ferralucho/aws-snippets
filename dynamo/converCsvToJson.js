@@ -6,7 +6,7 @@ const csvFilePath =
 var items = [];
 
 async function parseCsvToJson() {
-  await csv({ noheader: true })
+  await csv({ noheader: false })
     .fromFile(csvFilePath)
     .then((row) => {
       var item = {
